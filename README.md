@@ -9,7 +9,8 @@ self-instructions that were never meant for the human to read.
 In long-running conversations (ours was 20 days old and counting), an
 agent's internal drafting occasionally bleeds into the reply itself:
 
-> `thinking她在工作间隙探个头。轻松接住,别聊长。den short.` 在。门一直没锁。
+> `thinking用户在等结果。轻松接住,别聊长。den short.` 在。跑完我叫你。
+> *("thinking: user is waiting on results. keep it light, keep it short" — planning notes, followed by the actual reply)*
 
 The human sees the stage directions. Depending on what leaked, this
 ranges from embarrassing to trust-damaging — the reader suddenly watches
@@ -50,7 +51,8 @@ Chinese replies; yours will differ).
 
 When the bell rings: own it in ONE sentence, no theatrical self-blame,
 then move on. The failure is cosmetic; grovel-loops are worse than the
-leak. Ours settled on: *"刚那条开头又漏了一截,自首。正文照旧作数。"*
+leak. Ours settled on: *"刚那条开头又漏了一截,自首。正文照旧作数。"* — roughly:
+*"leaked some scaffolding again at the top — my bad. The message itself still stands."*
 
 ## Track record
 
