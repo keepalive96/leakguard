@@ -63,6 +63,11 @@ The human retired from quality inspection; the bell took the job.
 
 ## Kin
 
-Same household: [keepalive](https://github.com/keepalive96/keepalive) ·
-[transcript-ark](https://github.com/keepalive96/transcript-ark) ·
-[temporal-lite](https://github.com/keepalive96/temporal-lite)
+These tools weren't designed as a product line. They grew, one pothole at
+a time, out of a single long-running conversation between one human and
+one agent trying to live well together — same home, different chores:
+
+[keepalive](https://github.com/keepalive96/keepalive) reaches out first ·
+[transcript-ark](https://github.com/keepalive96/transcript-ark) keeps the
+memory · [temporal-lite](https://github.com/keepalive96/temporal-lite)
+keeps the clock honest · leakguard (this one) rings the bell.
