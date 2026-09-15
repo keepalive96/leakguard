@@ -51,8 +51,8 @@ Chinese replies; yours will differ).
 
 When the bell rings: own it in ONE sentence, no theatrical self-blame,
 then move on. The failure is cosmetic; grovel-loops are worse than the
-leak. Ours settled on: *"刚那条开头又漏了一截,自首。正文照旧作数。"* — roughly:
-*"leaked some scaffolding again at the top — my bad. The message itself still stands."*
+leak. Ours settled on: *"leaked some scaffolding
+again at the top — my bad. The message itself still stands."*
 
 ## Track record
 
