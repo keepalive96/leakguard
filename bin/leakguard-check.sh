@@ -15,19 +15,24 @@ TRANSCRIPT=$(echo "$INPUT" | python3 -c "import json,sys; print(json.load(sys.st
 python3 - "$TRANSCRIPT" "$LOG" << 'PYEOF'
 import json, sys, re, datetime
 tp, log = sys.argv[1], sys.argv[2]
-last_text = None
+# Collect ALL assistant text blocks since the last user message, not just
+# the final one — a turn can interleave text/tool-call/text, and earlier
+# text blocks (often where planning leaks happen) get lost if you only
+# check the last block before Stop fires.
+turn_texts = []
 with open(tp) as f:
     for line in f:
         try: d = json.loads(line)
         except: continue
-        if d.get('type') == 'assistant':
+        if d.get('type') == 'user':
+            turn_texts = []
+        elif d.get('type') == 'assistant':
             for b in d.get('message', {}).get('content', []):
                 if isinstance(b, dict) and b.get('type') == 'text' and b.get('text','').strip():
-                    last_text = b['text']
-if not last_text:
+                    turn_texts.append(b['text'])
+if not turn_texts:
     sys.exit(0)
 
-head = last_text[:200]
 patterns = [
     (r'^\s*thinking', 'starts with "thinking"'),
     (r'^\s*(den|Den)\b', 'scaffold token "den"'),
@@ -38,13 +43,24 @@ patterns = [
     (r'^\s*(简短回应|轻松接|别聊长|让她|按.{0,6}规则|口径|短句收)', 'Chinese self-instruction'),
     (r'\bper (the )?(persona|rule)\b', 'meta reference to persona/rules'),
 ]
-hits = [label for rx, label in patterns if re.search(rx, head)]
-if hits:
+# Check every text block from this turn, not just the last one — a leak
+# in an early block (before a tool call) is just as real as one at Stop.
+all_hits = []
+worst_head = ''
+for text in turn_texts:
+    head = text[:200]
+    hits = [label for rx, label in patterns if re.search(rx, head)]
+    if hits:
+        all_hits.extend(h for h in hits if h not in all_hits)
+        worst_head = head
+if all_hits:
+    hits = all_hits
     with open(log, 'a') as f:
         f.write(json.dumps({
             'time': datetime.datetime.now().strftime('%F %H:%M'),
             'hits': hits,
-            'head': head[:120],
+            'head': worst_head[:120],
+            'blocks_checked': len(turn_texts),
         }, ensure_ascii=False) + '\n')
     # Non-zero exit with stderr makes Claude Code surface this to the agent
     print(f"leakguard: scaffolding leaked into your last reply ({'; '.join(hits)}). Own it to the user in your next message.", file=sys.stderr)
